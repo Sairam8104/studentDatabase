@@ -1,0 +1,14 @@
+POST http://localhost:5000/student
+Content-Type: application/json
+
+{
+  "Name":"Kiran",
+  "StudentID":254688458,
+  "StudentYear":"4th Year",
+  "StudentCourse":"ECE",
+  "Address":"4-8/9,Miyapur",
+  "State":"Telangana"
+}
+###
+
+GET http://localhost:5000/student
