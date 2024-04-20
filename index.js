@@ -45,4 +45,13 @@ app.get("/student/", async (request, response) => {
   const movieNameArray = await db.all(getMovieName);
   response.send(movieNameArray);
 });
+
+app.get("/student/:Name", async (request, response) => {
+  const { Name } = request.params;
+  console.log(Name);
+  const matchDetailsQuery = `SELECT * FROM student WHERE StudentID = ${Name};`;
+  const matchDetails = await db.get(matchDetailsQuery);
+  response.send(matchDetails);
+});
+
 module.exports = app;
