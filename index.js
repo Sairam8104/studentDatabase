@@ -8,10 +8,10 @@ const dbPath = path.join(__dirname, "student.db");
 const app = express();
 
 app.use(express.json());
-app.use(cors(
+app.use(cors({
   origin:"http://localhost:3000",
   method:["GET"
-,"POST"])
+,"POST"],}));
 let db = null;
 const initializeDBAndServer = async () => {
   try {
