@@ -26,7 +26,7 @@ class StudentTable extends Component {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json(); // Extract JSON data from the response
-           
+            console.log(data.length)
             const formattedData = data.map(eachItem => ({
               Name: eachItem.Name,
               StudentID: eachItem.StudentID,
@@ -35,6 +35,7 @@ class StudentTable extends Component {
               State: eachItem.State,
               Address: eachItem.Address,
             }))
+            console.log(formattedData)
             this.setState({tableData: formattedData, isLoading: false});
           } catch (error) {
             console.error("Error fetching data:", error);
@@ -49,12 +50,10 @@ class StudentTable extends Component {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const SearchedData = await response.json()
-        console.log("................")
-        console.log(SearchedData);
-        console.log("................")
-        let newArray = []
-        newArray = [...newArray,SearchedData]
-        this.setState({tableData: newArray, isLoading: false})
+        console.log(SearchedData.length)
+
+        
+        this.setState({tableData: SearchedData, isLoading: false})
       } catch (error) {
         console.log(error)
         console.error("Error fetching data:", error);
@@ -72,7 +71,7 @@ class StudentTable extends Component {
 
   render() {
     const {isLoading, tableData, searchInput} = this.state
-    console.log(tableData)
+    
     return (
       <div className="blog-list-container">
         {isLoading ? (
@@ -97,6 +96,7 @@ class StudentTable extends Component {
               </thead>
               <tbody>
                 {tableData.map(item => (
+                
                   <TableItem tableData={item} key={item.StudentID} />
                 ))}
               </tbody>

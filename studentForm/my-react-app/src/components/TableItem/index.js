@@ -12,12 +12,12 @@ const TableItem = props => {
     State,
     Address,
   } = tableData
-  console.log(typeof(StudentID))
+  console.log((StudentID))
   return (
     <tr>
       <td>
         <Link
-          to='/about' StudentID={StudentID}
+          to='/about' studentid={StudentID}
           className="item-link"
         >
           {StudentID}

@@ -61,7 +61,18 @@ app.get('/student/:Name', async (request, response) => {
   }
 });
 
-
+app.get('/student', async (request, response) => {
+  
+  const query = `SELECT * FROM Student`;
+  try {
+    const result = await db.all(query);
+    response.json(result);
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    response.status(500).send('Internal Server Error');
+    
+  }
+});
 
 app.delete("/student/:StudentId/", async (request, response) => {
   const { StudentId } = request.params;
