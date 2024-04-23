@@ -1,9 +1,9 @@
-POST http://localhost:5000/student
+POST http://localhost:3005/student
 Content-Type: application/json
 
 {
   "Name":"Kiran",
-  "StudentID":254688458,
+  "StudentID":7679576,
   "StudentYear":"4th Year",
   "StudentCourse":"ECE",
   "Address":"4-8/9,Miyapur",
@@ -11,4 +11,9 @@ Content-Type: application/json
 }
 ###
 
-GET http://localhost:5000/student
+GET http://localhost:3005/student
+
+### 
+GET http://localhost:3005/student/r
+
+

@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const { open } = require("sqlite");
 const path = require("path");
 const sqlite3 = require("sqlite3");
@@ -6,7 +7,7 @@ const cors = require("cors");
 const dbPath = path.join(__dirname, "student.db");
 
 const app = express();
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
   origin:"*",
@@ -16,8 +17,8 @@ let db = null;
 const initializeDBAndServer = async () => {
   try {
     db = await open({ filename: dbPath, driver: sqlite3.Database });
-    app.listen(5000, () => {
-      console.log("Server Running at http://localhost:3000");
+    app.listen(3005, () => {
+      console.log("Server Running at http://localhost:3005");
     });
   } catch (e) {
     console.log(`Dr Error:${e.message}`);
@@ -26,7 +27,7 @@ const initializeDBAndServer = async () => {
 
 initializeDBAndServer();
 
-app.post("/Student/", async (request, response) => {
+app.post("/Student", async (request, response) => {
   const studentDetails = request.body;
   const {
     Name,
@@ -44,19 +45,23 @@ app.post("/Student/", async (request, response) => {
   response.send("Student Successfully Added");
 });
 
-app.get("/student/", async (request, response) => {
-  const getMovieName = `SELECT *  FROM student;`;
-  const movieNameArray = await db.all(getMovieName);
-  response.send(movieNameArray);
+
+
+
+app.get('/student/:Name', async (request, response) => {
+  const { Name } = request.params;
+  const query = `SELECT * FROM Student WHERE Name LIKE '%${Name}%'`;
+  try {
+    const result = await db.all(query);
+    response.json(result);
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    response.status(500).send('Internal Server Error');
+    
+  }
 });
 
-app.get("/student/:StudentId/", async (request, response) => {
-  const { StudentId } = request.params;
 
-  const matchDetailsQuery = `SELECT * FROM student WHERE StudentID = ${StudentId};`;
-  const matchDetails = await db.get(matchDetailsQuery);
-  response.send(matchDetails);
-});
 
 app.delete("/student/:StudentId/", async (request, response) => {
   const { StudentId } = request.params;
@@ -69,4 +74,4 @@ app.delete("/student/:StudentId/", async (request, response) => {
   response.send("Book Deleted Successfully");
 });
 
-module.exports = app;
+
