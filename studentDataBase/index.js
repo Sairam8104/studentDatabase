@@ -50,13 +50,7 @@ app.get("/student/", async (request, response) => {
   response.send(movieNameArray);
 });
 
-app.get("/student/:StudentId/", async (request, response) => {
-  const { StudentId } = request.params;
 
-  const matchDetailsQuery = `SELECT * FROM student WHERE StudentID = ${StudentId};`;
-  const matchDetails = await db.get(matchDetailsQuery);
-  response.send(matchDetails);
-});
 
 app.delete("/student/:StudentId/", async (request, response) => {
   const { StudentId } = request.params;
@@ -68,5 +62,16 @@ app.delete("/student/:StudentId/", async (request, response) => {
   await db.run(deleteBookQuery);
   response.send("Book Deleted Successfully");
 });
+
+
+app.get("/student/:StudentId/", async (request, response) => {
+  const { StudentId } = request.params;
+
+  const matchDetailsQuery = `SELECT * FROM student WHERE StudentID = ${StudentId};`;
+  const matchDetails = await db.get(matchDetailsQuery);
+  response.send(matchDetails);
+});
+
+ 
 
 module.exports = app;

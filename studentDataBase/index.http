@@ -12,3 +12,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:5000/student
+
+
+###
+GET http://localhost:5000/student/254688458
